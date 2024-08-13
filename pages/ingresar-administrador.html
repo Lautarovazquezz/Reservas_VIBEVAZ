@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/icons/v.png">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>VBV-Iniciar sesión-Administrador</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="icon"><a href="../index.html"></a></li>
+            </ul>
+        </nav>
+        <h1>Iniciar sesión-Administrador</h1>
+    </header>
+    <main>
+        <section class="sectionForm">
+            <form name="iniciarSesion" method="POST" action="../php/administrador.php">
+                <label for="correo">Email:</label><br><br>
+                <input type="text" name="correo" max="100" placeholder="Ingrese correo electronico" required><br><br>
+                <label for="contraseña">Contraseña:</label><br><br>
+                <input type="password" name="contraseña" max="10" placeholder="Ingrese contraseña" required><br><br>
+                <button value="Volver" onClick='location="./ingresar.html"'>Volver</button>
+                <button  type="reset" value="borrar">Borrar</button>
+                <button  type="submit" value="enviar">Iniciar sesión</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 VIBEVAZ. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>
