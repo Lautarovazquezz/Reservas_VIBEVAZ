@@ -1,21 +1,20 @@
+<?php
+	include("verifica_sesion.php");
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./assets/icons/v.png">
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="icon" href="../assets/icons/v.png">
+    <link rel="stylesheet" href="../css/styles.css">
     <title>VBV</title>
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li class="icon"><a href="index.html"></a></li>
-            </ul>
-            <ul>
-                <li><a class="boton" href="./php/ingresar.php">Ingresar</a></li>
-                <li><a class="boton" href="./pages/registrarse.html">Registrarse</a></li>
+                <li class="icon"><a href="menú.html"></a></li>
             </ul>
         </nav>
         <h1>V I B E V A Z</h1>
@@ -23,20 +22,20 @@
     <main>
         <section class="image-gallery">
             <div class="image-container">
-                <a href="./php/ingresar.php">
-                   <img src="./assets/images/restaurante.jpg" alt="Foto de restaurante">
+                <a href="../pages/bares.html">
+                    <img src="../assets/images/restaurante.jpg" alt="">
                     <p class="image-title">Bares & restaurantes</p>
                 </a>
             </div>
             <div class="image-container">
-                <a href="./php/ingresar.php">
-                    <img src="./assets/images/hospedaje.jpg" alt="Foto de habitación">
+                <a href="../pages/hospedajes.html">
+                    <img src="../assets/images/hospedaje.jpg" alt="">
                     <p class="image-title">Hospedajes</p>
                 </a>
             </div>
             <div class="image-container">
-                <a href="./php/ingresar.php">
-                    <img src="./assets/images/deporte.jpg" alt="Foto de persona jugando futbol">
+                <a href="../pages/deportes.html">
+                    <img src="../assets/images/deporte.jpg" alt="">
                     <p class="image-title">Deportes</p>
                 </a>
             </div>
@@ -47,5 +46,3 @@
     </footer>
 </body>
 </html>
-
-

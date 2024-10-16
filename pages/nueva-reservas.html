@@ -20,9 +20,16 @@
     </header>
     <main>
         <section class="sectionForm">
-            <form name="iniciarSesion" method="POST" action="../php/carga-reservas.php">
-                <label for="mesa">Mesa: </label>
-                <input type="number" name="mesa" placeholder="Ingrese nro.de mesa" required><br><br>
+            <form method="POST" action="../php/carga-reservas.php">
+                
+                <label for="cancha">Cancha: </label>
+                <select class="input" name="cancha"  placeholder="Ingrese cancha" required>
+                    <option value="" selected disabled></option>
+                    <option value="5">Cancha Futbol 5</option>
+                    <option value="7">Cancha futbol 7</option>
+                    <option value="8">Cancha futbol 8</option>
+                </select>
+                <br><br>
                 <label for="fecha">Fecha: </label>
                 <input type="date" name="fecha" placeholder="Ingrese fecha" required><br><br>
                 <label for="hora">Horario: </label>

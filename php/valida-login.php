@@ -5,7 +5,7 @@
     	die("Error al conectar: " . mysqli_connect_error());
 	}
 	
-	$consulta_usuarios = "SELECT * FROM `usuarios`;";
+	$consulta_usuarios = "SELECT * FROM `usuario`;";
 	$resultado_usuarios = mysqli_query($conexion, $consulta_usuarios);
 	
 	echo '<H1 class=h2> Tabla de usuarios </H1>';

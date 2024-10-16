@@ -21,13 +21,13 @@
 	$correo = $_POST["correo"]; 
 	$contraseña = $_POST["contraseña"]; 
 	
-	$consulta = "SELECT * FROM usuarios WHERE correo='$correo'";
+	$consulta = "SELECT * FROM usuario WHERE correo='$correo'";
 	$resultado= mysqli_query($conexion, $consulta);
 	$cantFilas = mysqli_num_rows($resultado);  
 	if ($cantFilas == 1) {  
 		echo "<H3>Te has registrado con exito</H3>" ;
 	} else {
-		$sql="INSERT INTO usuarios (nombre,apellido,correo,contraseña) VALUES ('$nombre','$apellido','$correo', '$contraseña')";
+		$sql="INSERT INTO usuario (nombre,apellido,correo,contraseña) VALUES ('$nombre','$apellido','$correo', '$contraseña')";
 		mysqli_query($conexion, $sql);
 		echo '<h2 class="h2">Te has registrado con exito.</h2>';
 		echo "<br></br>";

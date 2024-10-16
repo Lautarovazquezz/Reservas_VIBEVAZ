@@ -167,6 +167,16 @@ input:hover {
   cursor: pointer;
 }
 
+.input {
+  padding: 7px;
+  border-radius: 5px;
+}
+
+.input:hover {
+  cursor: pointer;
+}
+
+
 button {
   background-color: #7f7f7f;
   color: white;

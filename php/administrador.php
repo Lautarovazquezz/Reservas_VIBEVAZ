@@ -5,7 +5,7 @@ include("conexion.php");
 $correo = $_POST['correo'];
 $contraseña = $_POST['contraseña'];
 
-$consulta = "SELECT * FROM administrador WHERE correo='$correo' AND contraseña='$contraseña'";
+$consulta = "SELECT * FROM administradores WHERE correo='$correo' AND contraseña='$contraseña'";
 $resultado = mysqli_query($conexion, $consulta);
 $cantfilas = mysqli_num_rows($resultado);
 
