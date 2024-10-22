@@ -1,5 +1,5 @@
 <?php
-	include("verifica-sesion.php");
+    include("verifica-sesion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,6 +15,8 @@
         <nav>
             <ul>
                 <li class="icon"><a href="menú.php"></a></li>
+                <!-- Botón "Mis Reservas" agregado al lado del menú -->
+                <li class="reservas"><a href="mis-reservas.php">Mis Reservas</a></li>
             </ul>
         </nav>
         <h1>V I B E V A Z</h1>

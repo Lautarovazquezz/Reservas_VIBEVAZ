@@ -1,3 +1,6 @@
+<?php
+	include("verifica-administrador.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +23,7 @@
         <section>
             <input id="boton" type="button" value="Cargar reservas" onClick="location='./nueva-reservas.html'" class="boton" />                     
             <input id='boton' type='button' value='Buscar reservas' onClick="location='../php/buscar-reservas.php'" class="boton" />
-            <input id='boton' type='button' value='Eliminar reservas' onClick='location="./eliminar-reservas.html"' class="boton" />
+            <input id='boton' type='button' value='Eliminar reservas' onClick='location="./eliminar-reservas.php"' class="boton" />
             <input id='boton' type='button' value='Tabla de reservas' onClick='location="../php/tabla-reservas.php"' class="boton" />
             <input id="boton" type="button" value="Salir" onClick='location="../php/ingresar.php"' class="boton" />
         </section>

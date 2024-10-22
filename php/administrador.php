@@ -13,6 +13,6 @@ if ($cantfilas == 1){
     header("Location: ../pages/menú-reservas.html");
 } else {
     echo "<h1>Datos incorrectos</h1>";
-    echo "<a href='../pages/ingresar-administrador.html'><h2 class='enviarVolver'>Volver a intentar</h2></a>";
+    echo "<a href='../php/ingresar-administrador.php'><h2 class='enviarVolver'>Volver a intentar</h2></a>";
 }
 ?>

@@ -11,20 +11,20 @@
   <form action="buscar-reservas.php" method="GET">
 	<h2> Buscar reserva por su número</h2>
 	Criterio: &nbsp;
-	<input type="number" name="nroReserva" minlength="" maxlength="3" autofocus required class="caja"/>
+	<input type="text" name="nombreYApellido"  autofocus required class="caja"/>
     <br></br>
     <input type="reset" value="Borrar" class="boton" /> &nbsp;&nbsp;&nbsp; 
     <input type="submit" value="Buscar" class="boton" name="enviar" /> &nbsp;&nbsp;&nbsp;
-	<input type="button" value="Volver" class="boton" onClick='location="../pages/menú-reservas.html"' />
+	<input type="button" value="Volver" class="boton" onClick='location="./menú-reservas.php"' />
   </form>
 
   <?php  
 	if (isset($_GET['enviar'])) {
-		$nroReserva = $_GET['nroReserva'];
+		$nombreYApellido = $_GET['nombreYApellido'];
 		include("conexion.php");
 		echo "<br></br>";
-		echo "<h3>La reserva con el numero <em>'$nroReserva'</em>.</h3>";	
-		$consulta = "SELECT * FROM `reservas-futbol` WHERE nroReserva like '%$nroReserva%' ORDER BY hora ASC" ;
+		echo "<h3>La reserva con el numero <em>'$nombreYApellido'</em>.</h3>";	
+		$consulta = "SELECT * FROM `reservas-futbol-nou-camp` WHERE nombreYApellido like '%$nombreYApellido%' ORDER BY hora ASC" ;
 		$resultado = mysqli_query($conexion, $consulta);
 		$cantFilas = mysqli_num_rows($resultado);
 		if ($cantFilas==0) {echo '<H4> Sin resultados </H4>';}
@@ -38,7 +38,7 @@
 				echo "</tr>";
 				while ( $fila = mysqli_fetch_assoc($resultado) ) {   
 					echo "<tr>";  
-					echo "<td>".$fila['nroReserva']."</td>";  
+					echo "<td>".$fila['nombreYApellido']."</td>";  
 					echo "<td align='right'>".$fila['cancha']."</td>";
 					echo "<td align='right'>".$fila['fecha']."</td>";
 					echo "<td align='right'>".$fila['hora']."</td>";

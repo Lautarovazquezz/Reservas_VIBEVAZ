@@ -28,7 +28,7 @@
                 <button  type="reset" value="borrar">Borrar</button>
                 <button  type="submit" value="enviar" name="enviar">Iniciar sesión</button>
                 <br><br><a class="registrarse" href="../pages/registrarse.html">Registrarse</a>
-                <a class="admin" href="../pages/ingresar-administrador.html">Administrador</a>
+                <a class="admin" href="./ingresar-administrador.php">Administrador</a>
                 <?php
 		            if (isset($_POST["enviar"])) {  
 			        include ("conexion.php");

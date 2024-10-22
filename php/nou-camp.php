@@ -1,5 +1,5 @@
 <?php
-	include("verifica-sesion.php");
+    include("verifica-sesion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,7 +13,7 @@
 
 <body>
     <header>
-    <nav>
+        <nav>
             <ul>
                 <li class="icon"><a href="menú.php"></a></li>
             </ul>
@@ -34,11 +34,13 @@
                     <option value="Fútbol 8">Fútbol 8</option>
                 </select><br><br>
 
+                <!-- Fecha: solo permite seleccionar desde hoy hasta 30 días en adelante -->
                 <label for="fecha">Fecha (YYYY-MM-DD):</label><br>
-                <input type="date" name="fecha" required><br><br>
+                <input type="date" name="fecha" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+30 days')); ?>" required><br><br>
 
+                <!-- Hora: solo permite seleccionar entre las 08:00 y 22:00 -->
                 <label for="hora">Hora (HH:MM):</label><br>
-                <input type="time" name="hora" required><br><br>
+                <input type="time" name="hora" min="08:00" max="22:00" required><br><br>
 
                 <button type="submit" name="enviar">Reservar</button>
             </form>
@@ -54,14 +56,14 @@
                     $fecha = $_POST["fecha"];
                     $hora = $_POST["hora"]; 
 
-                    // Verifica si ya existe una reserva con el mismo número
-                    $consulta = "SELECT * FROM `reservas-futbol-nou-camp` WHERE nombreYApellido='$nombreYApellido'";
+                    // Verifica si ya existe una reserva en la misma cancha, fecha y hora
+                    $consulta = "SELECT * FROM `reservas-futbol-nou-camp` WHERE cancha='$cancha' AND fecha='$fecha' AND hora='$hora'";
                     $resultado = mysqli_query($conexion, $consulta);
                     $cantFilas = mysqli_num_rows($resultado);  
 
-                    if ($cantFilas == 1) {  
-                        // Si ya existe una reserva con ese número
-                        echo "<h3>La reserva $nombreYApellido ya ha sido registrada.</h3>";
+                    if ($cantFilas >= 1) {
+                        // Si ya existe una reserva para la misma cancha, fecha y hora
+                        echo "<h3>Lo sentimos, ya existe una reserva para la cancha $cancha en la fecha $fecha a las $hora.</h3>";
                     } else {
                         // Inserta la nueva reserva en la base de datos
                         $sql = "INSERT INTO `reservas-futbol-nou-camp` (nombreYApellido, cancha, fecha, hora, disponible) 
@@ -78,7 +80,7 @@
                     }
 
                     // Botón para volver al formulario de nueva reserva
-                    echo "<br><input type='button' class='boton' id='boton' value='Volver' onClick='location=\"../pages/nueva-reservas.html\"'> ";
+                    echo "<br><input type='button' class='boton' id='boton' value='Volver' onClick='location=\"./deportes.php\"'> ";
                 }
             ?>
         </section>
@@ -89,3 +91,4 @@
 </body>
 
 </html>
+
