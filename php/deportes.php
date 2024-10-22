@@ -1,3 +1,6 @@
+<?php
+	include("verifica-sesion.php");
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +14,7 @@
     <header>
         <nav>
             <ul>
-                <li class="icon"><a href="menú.html"></a></li>
+                <li class="icon"><a href="menú.php"></a></li>
             </ul>
         </nav>
         <h1>Canchas de futbol</h1>
@@ -19,20 +22,20 @@
     <main>
         <section class="image-gallery">
             <div class="image-container">
-                <a href="nou-camp.html">
+                <a href="tercer-tiempo.html">
+                    <img src="../assets/images/proximamente.jpeg" alt="">
+                    <p class="image-title">Tercer tiempo</p>
+                </a>
+            </div>
+            <div class="image-container">
+                <a href="nou-camp.php">
                     <img src="../assets/images/nou-camp.jpeg" alt="">
                     <p class="image-title">Nou camp</p>
                 </a>
             </div>
             <div class="image-container">
-                <a href="tercer-tiempo.html">
-                    <img src="../assets/images/tercer-tiempo.jpeg" alt="">
-                    <p class="image-title">Tercer tiempo</p>
-                </a>
-            </div>
-            <div class="image-container">
                 <a href="blanca-y-negra.html">
-                    <img src="../assets/images/blanca-negra.jpg" alt="">
+                    <img src="../assets/images/proximamente.jpeg" alt="">
                     <p class="image-title">Blanca y negra</p>
                 </a>
             </div>

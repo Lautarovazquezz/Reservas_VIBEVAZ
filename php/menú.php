@@ -1,5 +1,5 @@
 <?php
-	include("verifica_sesion.php");
+	include("verifica-sesion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,7 +14,7 @@
     <header>
         <nav>
             <ul>
-                <li class="icon"><a href="menú.html"></a></li>
+                <li class="icon"><a href="menú.php"></a></li>
             </ul>
         </nav>
         <h1>V I B E V A Z</h1>
@@ -34,7 +34,7 @@
                 </a>
             </div>
             <div class="image-container">
-                <a href="../pages/deportes.html">
+                <a href="./deportes.php">
                     <img src="../assets/images/deporte.jpg" alt="">
                     <p class="image-title">Deportes</p>
                 </a>

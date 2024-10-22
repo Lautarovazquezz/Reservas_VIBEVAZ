@@ -10,7 +10,7 @@ $resultado = mysqli_query($conexion, $consulta);
 $cantfilas = mysqli_num_rows($resultado);
 
 if ($cantfilas == 1){
-    header("Location: ../pages/menú.html");
+    header("Location: ../pages/menú.php");
 } else {
     echo "<h1>Datos incorrectos</h1>";
     echo "<a href='../pages/ingresar.html'><h2 class='enviarVolver'>Volver a intentar</h2></a>";

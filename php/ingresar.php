@@ -26,7 +26,7 @@
                 <label for="contraseña">Contraseña:</label><br><br>
                 <input type="password" name="contraseña" max="10" placeholder="Ingrese contraseña" required><br><br>
                 <button  type="reset" value="borrar">Borrar</button>
-                <button  type="submit" value="enviar">Iniciar sesión</button>
+                <button  type="submit" value="enviar" name="enviar">Iniciar sesión</button>
                 <br><br><a class="registrarse" href="../pages/registrarse.html">Registrarse</a>
                 <a class="admin" href="../pages/ingresar-administrador.html">Administrador</a>
                 <?php
@@ -34,11 +34,10 @@
 			        include ("conexion.php");
 			        $usu = $_POST['correo'];
                     $cla = $_POST['contraseña'];
-
 			        $consulta = "SELECT * FROM usuario WHERE correo='$usu' AND contraseña='$cla'";
                     $resultado = mysqli_query($conexion, $consulta);
                     $cantfilas = mysqli_num_rows($resultado);
-			        if ($cantFilas == 1) {
+			        if ($cantfilas == 1) {
 				        session_start();   
 				        $_SESSION["logueado"] = $usu; 
 				        header("location:./menú.php");

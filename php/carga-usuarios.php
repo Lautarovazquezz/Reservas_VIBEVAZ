@@ -34,7 +34,7 @@
 		mysqli_close($conexion);
 	}
 	
-	echo "<input type='button' class='boton' id='boton' value='Volver' onClick='location=\"../pages/ingresar.html\"'> ";
+	echo "<input type='button' class='boton' id='boton' value='Volver' onClick='location=\"../php/ingresar.php\"'> ";
 ?>  
 	
 </body>
