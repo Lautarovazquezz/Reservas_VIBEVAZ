@@ -1,18 +1,31 @@
 <?php
+session_start(); // Iniciar sesión
+
+// Conexión a la base de datos
 include("conexion.php");
 
+if (isset($_POST['enviar'])) {
+    $correo = $_POST['correo'];
+    $contrasena = $_POST['contrasena'];
 
-$correo = $_POST['correo'];
-$contraseña = $_POST['contraseña'];
+    // Consulta para verificar si el correo y contraseña coinciden
+    $consulta = "SELECT usuario_id, correo FROM usuarios WHERE correo='$correo' AND contrasena='$contrasena'";
+    $resultado = mysqli_query($conexion, $consulta);
 
-$consulta = "SELECT * FROM usuario WHERE correo='$correo' AND contraseña='$contraseña'";
-$resultado = mysqli_query($conexion, $consulta);
-$cantfilas = mysqli_num_rows($resultado);
+    if (mysqli_num_rows($resultado) == 1) {
+        // Credenciales correctas, obtener datos del usuario
+        $fila = mysqli_fetch_assoc($resultado);
 
-if ($cantfilas == 1){
-    header("Location: ../pages/menú.php");
-} else {
-    echo "<h1>Datos incorrectos</h1>";
-    echo "<a href='../pages/ingresar.html'><h2 class='enviarVolver'>Volver a intentar</h2></a>";
+        // Guardar correo y usuario_id en la sesión
+        $_SESSION['correo'] = $fila['correo'];
+        $_SESSION['usuario_id'] = $fila['usuario_id'];
+
+        // Redirigir al menú o página de reservas
+        header("Location: menu.php");
+        exit;
+    } else {
+        // Mostrar error si las credenciales no coinciden
+        echo "<h3>Correo o contraseña incorrectos.</h3>";
+    }
 }
 ?>

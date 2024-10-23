@@ -15,23 +15,24 @@
 	<H2>Tabla de reservas</H2>
 	<table border="2">
 		<tr>
-			<th>Nro. de reserva</th><th>Cancha</th><th>Fecha</th><th>Horario</th><th>Eliminar</th>
+			<th>correo de reserva</th><th>Nombre de reserva</th><th>Cancha</th><th>Fecha</th><th>Horario</th><th>Eliminar</th>
 		</tr>	
 		<?php
 	include ("conexion.php");
 
-	$consulta = "SELECT * FROM `reservas-futbol-nou-camp` ORDER BY fecha ASC";
+	$consulta = "SELECT * FROM `reservas_futbol_nou_camp` ORDER BY fecha ASC";
 	$resultado = mysqli_query($conexion, $consulta);
 
 	while ($fila = mysqli_fetch_assoc($resultado)) {  
 		echo "<tr>
-			    <td>".$fila['nombreYApellido']."</td>
-			    <td>".$fila['cancha']."</td>
-			    <td>".$fila['fecha']."</td>
-			    <td>".$fila['hora']."</td>
-			    <td>
-			        <a href='?eliminar=".$fila['nombreYApellido']."' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta reserva?');\">
-			            <img src='../assets/images/Papelera.png' alt='Eliminar' style='width:20px;height:20px; text-align: center' />
+			    <td align='center'>".$fila['correoE']."</td>
+				<td align='center'>".$fila['nombreR']."</td>
+			    <td align='center'>".$fila['cancha']."</td>
+			    <td align='center'>".$fila['fecha']."</td>
+			    <td align='center'>".$fila['hora']."</td>
+			    <td align='center'>
+			        <a href='?eliminar=".$fila['nombreR']."' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta reserva?');\">
+			            <img src='../assets/images/Papelera.png' alt='Eliminar' style='width:20px;height:20px;' />
 			        </a>
 			    </td>
 			  </tr>";
@@ -39,8 +40,8 @@
 
 	// Código para eliminar
 	if (isset($_GET['eliminar'])) {
-		$nombreYApellido = $_GET['eliminar'];
-		$sql = "DELETE FROM `reservas-futbol-nou-camp` WHERE nombreYApellido='$nombreYApellido'"; // Comillas simples para evitar errores con nombres
+		$nombreR = $_GET['eliminar'];
+		$sql = "DELETE FROM `reservas_futbol_nou_camp` WHERE nombreR='$nombreR'"; // Comillas simples para evitar errores con nombres
 		try {
 			mysqli_query($conexion, $sql);
 		}

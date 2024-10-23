@@ -30,23 +30,28 @@
                 <br><br><a class="registrarse" href="../pages/registrarse.html">Registrarse</a>
                 <a class="admin" href="./ingresar-administrador.php">Administrador</a>
                 <?php
-		            if (isset($_POST["enviar"])) {  
-			        include ("conexion.php");
-			        $usu = $_POST['correo'];
-                    $cla = $_POST['contraseña'];
-			        $consulta = "SELECT * FROM usuario WHERE correo='$usu' AND contraseña='$cla'";
-                    $resultado = mysqli_query($conexion, $consulta);
-                    $cantfilas = mysqli_num_rows($resultado);
-			        if ($cantfilas == 1) {
-				        session_start();   
-				        $_SESSION["logueado"] = $usu; 
-				        header("location:./menú.php");
-			        } else {
-				        echo "<H4 id='errorLoguin'> Usuario y Clave no existen o no coinciden </H4>" ;
-			        }
-			        mysqli_close($conexion);
-		        }
-	            ?>
+if (isset($_POST["enviar"])) {  
+    include("conexion.php");
+    $usu = $_POST['correo'];
+    $cla = $_POST['contraseña'];
+    // Asegúrate de que la consulta incluya usuario_id
+    $consulta = "SELECT * FROM usuario WHERE correo='$usu' AND contraseña='$cla'";
+    $resultado = mysqli_query($conexion, $consulta);
+    $cantfilas = mysqli_num_rows($resultado);
+    
+    if ($cantfilas == 1) {
+        session_start();   
+        $usuario = mysqli_fetch_assoc($resultado); // Obtiene la fila de resultados
+        $_SESSION["logueado"] = $usu; 
+        $_SESSION["usuario_id"] = $usuario['usuario_id']; // Almacena el usuario_id en la sesión
+        header("location:./menú.php");
+    } else {
+        echo "<H4 id='errorLoguin'> Usuario y Clave no existen o no coinciden </H4>";
+    }
+    mysqli_close($conexion);
+}
+?>
+
             </form>
         </section>
     </main>
