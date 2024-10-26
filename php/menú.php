@@ -1,6 +1,3 @@
-<?php
-    include("verifica-sesion.php");
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,9 +12,11 @@
         <nav>
             <ul>
                 <li class="icon"><a href="menú.php"></a></li>
-                <!-- Botón "Mis Reservas" agregado al lado del menú -->
-                <li class="reservas"><a href="mis-reservas.php">Mis Reservas</a></li>
+                <li ><a class="boton" href="./reservas/mis-reservas.php">Mis Reservas</a></li>
             </ul>
+            <?php
+                include("./session/verifica-sesion.php");
+            ?>
         </nav>
         <h1>V I B E V A Z</h1>
     </header>
@@ -25,19 +24,19 @@
         <section class="image-gallery">
             <div class="image-container">
                 <a href="../pages/bares.html">
-                    <img src="../assets/images/restaurante.jpg" alt="">
+                    <img src="../assets/images/restaurante.jpg" alt="Bares & restaurantes">
                     <p class="image-title">Bares & restaurantes</p>
                 </a>
             </div>
             <div class="image-container">
                 <a href="../pages/hospedajes.html">
-                    <img src="../assets/images/hospedaje.jpg" alt="">
+                    <img src="../assets/images/hospedaje.jpg" alt="Hospedajes">
                     <p class="image-title">Hospedajes</p>
                 </a>
             </div>
             <div class="image-container">
-                <a href="./deportes.php">
-                    <img src="../assets/images/deporte.jpg" alt="">
+                <a href="./deportes/deportes.php">
+                    <img src="../assets/images/deporte.jpg" alt="Deportes">
                     <p class="image-title">Deportes</p>
                 </a>
             </div>
