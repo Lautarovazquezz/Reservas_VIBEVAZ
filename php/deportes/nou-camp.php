@@ -10,7 +10,7 @@
     <header>
         <nav>
             <ul>
-                <li class="icon"><a href="../menú.php"></a></li>
+                <li class="icon"><a href="../session/menú.php"></a></li>
             </ul>
             <?php
                 include("../session/verifica-sesion.php");
@@ -24,7 +24,7 @@
                 $usuario_id = $_SESSION['usuario_id'];
             ?>
         </nav>
-        <h1>Realizar Reserva de Cancha</h1>
+        <h1>Realizar reserva</h1>
     </header>
     <main>
         <section class="sectionForm">

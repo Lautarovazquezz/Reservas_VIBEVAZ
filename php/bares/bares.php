@@ -11,7 +11,7 @@
     <header>
         <nav>
             <ul>
-                <li class="icon"><a href="../menú.html"></a></li>
+                <li class="icon"><a href="../session/menú.php"></a></li>
             </ul>
             <?php
                 include("../session/verifica-sesion.php");

@@ -55,13 +55,25 @@
     <header>
         <nav>
             <ul>
-                <li class="icon"><a href="../menú.php"></a></li>
+                <li class="icon"><a href="../session/menú.php"></a></li>
             </ul>
             <?php
                 include("../session/verifica-sesion.php");
                 include("../session/conexion.php");
 
                 $usuario_id = $_SESSION['usuario_id'];
+
+                $rango_pag = 5;
+                $pagina = isset($_GET['pagina']) && $_GET['pagina'] > 1 ? $_GET['pagina'] : 1;
+                $desde = ($pagina - 1) * $rango_pag;
+
+                $sql_count = "SELECT COUNT(*) AS total FROM reservas_futbol_nou_camp";
+                $resultado_count = mysqli_query($conexion, $sql_count);
+                $cant_registros = mysqli_fetch_assoc($resultado_count)['total'];
+                $cant_pag = ceil($cant_registros / $rango_pag);
+
+                $sql = "SELECT * FROM reservas_futbol_nou_camp ORDER BY fecha ASC LIMIT $desde, $rango_pag";
+                $resultado = mysqli_query($conexion, $sql);
 
                 $consulta = "SELECT nombreR, cancha, fecha, hora, reserva_id FROM `reservas_futbol_nou_camp` WHERE usuario_id='$usuario_id' ORDER BY fecha ASC, hora ASC";
                 $resultado = mysqli_query($conexion, $consulta);
@@ -158,6 +170,13 @@
                         <?php endwhile; ?>
                     </tbody>
                 </table>
+                <div class="pagination">
+                <?php
+                for ($i = 1; $i <= $cant_pag; $i++) {
+                    echo "<a href='?pagina=$i'>$i</a> ";
+                }
+                ?>
+                </div>
             <?php else: ?>
                 <p>No tienes reservas registradas.</p>
             <?php endif; ?>

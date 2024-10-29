@@ -1,14 +1,3 @@
-<?php
-include("../administrador/verifica-administrador.php"); 
-
-if (!isset($_SESSION['logueado-admin'])) {
-    header("Location: ../usuarios/ingresar.php");
-    exit;
-}
-
-$logueado_admin = $_SESSION['logueado-admin'];
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,6 +13,17 @@ $logueado_admin = $_SESSION['logueado-admin'];
             <ul>
                 <li class="icon"><a href="menú-reservas.php"></a></li>
             </ul>
+            <?php
+                include("../administrador/verifica-administrador.php"); 
+
+                if (!isset($_SESSION['logueado-admin'])) {
+                    header("Location: ../usuarios/ingresar.php");
+                    exit;
+                }
+
+                $logueado_admin = $_SESSION['logueado-admin'];
+                $administrador_id = $_SESSION ['administrador_id']
+            ?>
         </nav>
         <h1>Realizar Reserva de Cancha</h1>
     </header>
@@ -73,8 +73,8 @@ $logueado_admin = $_SESSION['logueado-admin'];
                         if ($cantFilas >= 1) {
                             echo "<h3 style='color:red'>Ya hay una reserva para esa cancha en la fecha y hora seleccionadas.</h3>";
                         } else {
-                            $sql = "INSERT INTO reservas_futbol_nou_camp (correoE, cancha, fecha, hora, nombreR) 
-                                    VALUES ('$logueado_admin', '$cancha', '$fecha', '$hora','$nombreR')";
+                            $sql = "INSERT INTO reservas_futbol_nou_camp (administrador_id,correoE, cancha, fecha, hora, nombreR) 
+                                    VALUES ('$administrador_id','$logueado_admin', '$cancha', '$fecha', '$hora','$nombreR')";
                             
                             if (mysqli_query($conexion, $sql)) {
                                 echo "<h2 style='color:green'>Reserva realizada exitosamente a nombre de $nombreR.</h2>";

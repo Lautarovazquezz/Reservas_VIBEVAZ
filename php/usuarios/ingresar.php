@@ -44,7 +44,7 @@
                             $usuario = mysqli_fetch_assoc($resultado); 
                             $_SESSION["logueado"] = $usu; 
                             $_SESSION["usuario_id"] = $usuario['usuario_id'];
-                            header("location:../menú.php");
+                            header("location:../session/menú.php");
                         } else {
                             echo "<br><br><H2 id='errorLoguin'> Usuario y Clave no existen o no coinciden </H2>";
                         }

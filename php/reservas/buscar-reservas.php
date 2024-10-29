@@ -1,6 +1,3 @@
-<?php
-	include("../administrador/verifica-administrador.php");
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,6 +43,9 @@
             <ul>
                 <li class="icon"><a href="menú-reservas.php"></a></li>
             </ul>
+			<?php
+				include("../administrador/verifica-administrador.php");
+			?>
         </nav>
 		<h1>Tabla de reservas</h1>
     </header>
