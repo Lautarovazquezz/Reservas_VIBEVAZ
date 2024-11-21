@@ -13,6 +13,7 @@
         <nav>
             <ul>
                 <li class="icon"><a href="../session/menú.php"></a></li>
+                <li ><a class="boton" href="../reservas/mis-reservas.php">Mis Reservas</a></li>
             </ul>
             <?php
                 include("../session/verifica-sesion.php");
@@ -24,7 +25,7 @@
         <section class="image-gallery">
             <div class="image-container">
                 <a href="tercer-tiempo.php">
-                    <img src="https://img.freepik.com/vector-gratis/proximamente-fondo-diseno-efecto-luz-enfoque_1017-27277.jpg" alt="Proximamente">
+                    <img src="../../assets/images/proximamente.jpg" alt="Proximamente">
                     <p class="image-title">Tercer tiempo</p>
                 </a>
             </div>
@@ -36,7 +37,7 @@
             </div>
             <div class="image-container">
                 <a href="blanca-y-negra.php">
-                    <img src="https://img.freepik.com/vector-gratis/proximamente-fondo-diseno-efecto-luz-enfoque_1017-27277.jpg" alt="Proximamente">
+                    <img src="../../assets/images/proximamente.jpg" alt="Proximamente">
                     <p class="image-title">Blanca y negra</p>
                 </a>
             </div>

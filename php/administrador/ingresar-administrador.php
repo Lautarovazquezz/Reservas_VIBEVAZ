@@ -40,7 +40,7 @@
 			        if ($cantfilas == 1) {
 				        session_start();   
 				        $_SESSION["logueado-admin"] = $usu; 
-                        $_SESSION["administrador_id"] = $usuario['administrador_id'];
+                        $_SESSION["usuario_id"] = $usuario['usuario_id'];
 				        header("location:../reservas/menú-reservas.php");
 			        } else {
 				        echo "<br><br><H2 id='errorLoguin'> Usuario y Clave no existen o no coinciden </H2>" ;

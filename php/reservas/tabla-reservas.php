@@ -95,7 +95,7 @@
                     if (!mysqli_query($conexion, $sql_delete)) {
                         echo "<p>Error al eliminar la reserva: " . mysqli_error($conexion) . "</p>";
                     } else {
-                        header("Location: tabla-reservas.php");
+                        header("Location: ./tabla-reservas.php");
                     }
                 }
 
@@ -106,7 +106,7 @@
             <div class="pagination">
                 <?php
                 for ($i = 1; $i <= $cant_pag; $i++) {
-                    echo "<a href='?pagina=$i'>Pag.$i</a> ";
+                    echo "<a style='font-size:20px' href='?pagina=$i'>Pag.$i</a> ";
                 }
                 ?>
             </div>

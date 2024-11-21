@@ -20,8 +20,7 @@
         <h1>Menú de reservas</h1>
     </header>
     <main>
-        <section>
-            <input id="boton" type="button" value="Cargar reservas" onClick="location='./nueva-reservas.php'" class="boton" />                     
+        <section>                 
             <input id='boton' type='button' value='Buscar reservas' onClick="location='./buscar-reservas.php'" class="boton" />
             <input id='boton' type='button' value='Tabla de reservas' onClick='location="./tabla-reservas.php"' class="boton" />
             <input id="boton" type="button" value="Salir" onClick='location="../session/cerrar-sesion.php"' class="boton" />

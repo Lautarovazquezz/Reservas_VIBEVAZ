@@ -33,7 +33,7 @@
                 <label for="contraseña">Contraseña: </label>
                 <input type="password" name="contraseña" maxlength="10" placeholder="Ingrese contraseña" required><br><br>
 
-                <button type="button" onClick='location.href="./ingresar.php"'>Volver</button>
+                <button type="button" onClick='location.href="./ingresar.php"'>Ingresar</button>
                 <button type="reset" value="Borrar">Borrar</button>
                 <button type="submit" value="Enviar">Enviar</button>
 

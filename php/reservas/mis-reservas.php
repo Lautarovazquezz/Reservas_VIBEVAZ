@@ -49,6 +49,7 @@
         .form-modificar {
             display: none;
         }
+        
     </style>
 </head>
 <body>
@@ -63,53 +64,27 @@
 
                 $usuario_id = $_SESSION['usuario_id'];
 
+                if (isset($_GET['cancelar']) && isset($_GET['reserva_id'])) {
+                    $reserva_id = $_GET['reserva_id'];
+                    $eliminar_sql = "DELETE FROM `reservas_futbol_nou_camp` WHERE reserva_id='$reserva_id' AND usuario_id='$usuario_id'";
+                    mysqli_query($conexion, $eliminar_sql);
+                    header("Location: " . $_SERVER['PHP_SELF']);
+                    exit();
+                }
+
+                // Paginación
                 $rango_pag = 5;
                 $pagina = isset($_GET['pagina']) && $_GET['pagina'] > 1 ? $_GET['pagina'] : 1;
                 $desde = ($pagina - 1) * $rango_pag;
 
-                $sql_count = "SELECT COUNT(*) AS total FROM reservas_futbol_nou_camp";
+                // Contar registros totales
+                $sql_count = "SELECT COUNT(*) AS total FROM reservas_futbol_nou_camp WHERE usuario_id='$usuario_id'";
                 $resultado_count = mysqli_query($conexion, $sql_count);
                 $cant_registros = mysqli_fetch_assoc($resultado_count)['total'];
                 $cant_pag = ceil($cant_registros / $rango_pag);
 
-                $sql = "SELECT * FROM reservas_futbol_nou_camp ORDER BY fecha ASC LIMIT $desde, $rango_pag";
-                $resultado = mysqli_query($conexion, $sql);
-
-                $consulta = "SELECT nombreR, cancha, fecha, hora, reserva_id FROM `reservas_futbol_nou_camp` WHERE usuario_id='$usuario_id' ORDER BY fecha ASC, hora ASC";
-                $resultado = mysqli_query($conexion, $consulta);
-
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    if (isset($_POST['modificar'])) {
-                        $reserva_id = $_POST['reserva_id'];
-                        $nueva_fecha = $_POST['nueva_fecha'] ?? null;
-                        $nueva_hora = $_POST['nueva_hora'] ?? null;
-                        $nueva_cancha = $_POST['nueva_cancha'] ?? null;
-
-                        $actualizar_sql = "UPDATE `reservas_futbol_nou_camp` SET ";
-                        $actualizaciones = [];
-
-                        if ($nueva_fecha) {
-                            $actualizaciones[] = "fecha='$nueva_fecha'";
-                        }
-                        if ($nueva_hora) {
-                            $actualizaciones[] = "hora='$nueva_hora'";
-                        }
-                        if ($nueva_cancha) {
-                            $actualizaciones[] = "cancha='$nueva_cancha'";
-                        }
-
-                        if (count($actualizaciones) > 0) {
-                            $actualizar_sql .= implode(", ", $actualizaciones) . " WHERE reserva_id='$reserva_id' AND usuario_id='$usuario_id'";
-                            mysqli_query($conexion, $actualizar_sql);
-                        }
-                    } elseif (isset($_POST['cancelar'])) {
-                        $reserva_id = $_POST['reserva_id'];
-                        $eliminar_sql = "DELETE FROM `reservas_futbol_nou_camp` WHERE reserva_id='$reserva_id' AND usuario_id='$usuario_id'";
-                        mysqli_query($conexion, $eliminar_sql);
-                    }
-                }
-
-                $consulta = "SELECT nombreR, cancha, fecha, hora, reserva_id FROM `reservas_futbol_nou_camp` WHERE usuario_id='$usuario_id' ORDER BY fecha ASC, hora ASC";
+                // Consulta con paginación
+                $consulta = "SELECT nombreR, cancha, fecha, hora, reserva_id FROM `reservas_futbol_nou_camp` WHERE usuario_id='$usuario_id' ORDER BY fecha ASC, hora ASC LIMIT $desde, $rango_pag";
                 $resultado = mysqli_query($conexion, $consulta);
             ?>
         </nav>
@@ -131,15 +106,19 @@
                     <tbody>
                         <?php while ($fila = mysqli_fetch_assoc($resultado)): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($fila['nombreR']); ?></td>
-                                <td><?php echo htmlspecialchars($fila['cancha']); ?></td>
-                                <td><?php echo htmlspecialchars($fila['fecha']); ?></td>
-                                <td><?php echo htmlspecialchars($fila['hora']); ?></td>
+                                <td><?php echo $fila['nombreR']; ?></td>
+                                <td><?php echo $fila['cancha']; ?></td>
+                                <td><?php echo $fila['fecha']; ?></td>
+                                <td><?php echo $fila['hora']; ?></td>
                                 <td>
                                     <button onclick="document.getElementById('modificar-<?php echo $fila['reserva_id']; ?>').style.display='table-row';">Modificar</button>
                                     <div style="display:inline;">
-                                        <input type="hidden" id="reserva_id_<?php echo $fila['reserva_id']; ?>" value="<?php echo $fila['reserva_id']; ?>">
-                                        <button type="button" onclick="cancelarReserva(<?php echo $fila['reserva_id']; ?>)">Cancelar reserva</button>
+                                        <button style='color:white;' 
+                                            onmouseover="this.style.color='black';" 
+                                            onmouseout="this.style.color='white';" 
+                                            onclick="if(confirm('¿Estás seguro de que deseas cancelar esta reserva?')) { window.location.href='?cancelar=true&reserva_id=<?php echo $fila['reserva_id']; ?>'; }">
+                                            Cancelar reserva
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -163,7 +142,8 @@
                                             <option value="Fútbol 7">Fútbol 7</option>
                                             <option value="Fútbol 8">Fútbol 8</option>
                                         </select><br><br>
-                                        <button type="submit" name="modificar" onclick="document.getElementById('modificar-<?php echo $fila['reserva_id']; ?>').style.display='none';">Modificar Reserva</button>
+                                        <button type="submit" name="modificar">Modificar Reserva</button>
+                                        <button type="button" onclick="document.getElementById('modificar-<?php echo $fila['reserva_id']; ?>').style.display='none';">Cancelar</button>
                                     </form>
                                 </td>
                             </tr>
@@ -171,12 +151,12 @@
                     </tbody>
                 </table>
                 <div class="pagination">
-                <?php
-                for ($i = 1; $i <= $cant_pag; $i++) {
-                    echo "<a href='?pagina=$i'>$i</a> ";
-                }
-                ?>
-                </div>
+                    <?php
+                    for ($i = 1; $i <= $cant_pag; $i++) {
+                        echo "<a style='font-size:20px' href='?pagina=$i'>Pag.$i</a> ";
+                    }
+                    ?>
+                </div><br>
             <?php else: ?>
                 <p>No tienes reservas registradas.</p>
             <?php endif; ?>
@@ -188,24 +168,6 @@
     <footer>
         <p>© 2024 VIBEVAZ. Todos los derechos reservados.</p>
     </footer>
-
-    <script>
-        function cancelarReserva(reserva_id) {
-            if (confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
-                const formData = new FormData();
-                formData.append('cancelar', true);
-                formData.append('reserva_id', reserva_id);
-
-                fetch('', {
-                    method: 'POST',
-                    body: formData
-                }).then(response => {
-                    if (response.ok) {
-                        location.reload(); 
-                    }
-                }).catch(error => console.error('Error al cancelar la reserva:', error));
-            }
-        }
-    </script>
 </body>
 </html>
+
