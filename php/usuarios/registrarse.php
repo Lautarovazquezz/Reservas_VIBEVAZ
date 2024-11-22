@@ -2,11 +2,32 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../assets/icons/v.png">
     <link rel="stylesheet" href="../../css/styles.css">
-    <title>VBV-Registrarse</title>
+    <title>VBV - Registrarse</title>
+    <script>
+        function validarRegistro(event) {
+            let contraseña = document.forms["registrarse"]["contraseña"].value;
+            let esValido = true;
+
+            do {
+                // Validar que la contraseña tenga exactamente 8 caracteres con al menos una mayúscula, una minúscula y un dígito
+                const contraseñaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{8}$/;
+                if (!contraseñaRegex.test(contraseña)) {
+                    alert("La contraseña debe tener exactamente 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un dígito.");
+                    esValido = false;
+                    break;
+                }
+            } while (false);
+
+            if (!esValido) {
+                event.preventDefault();
+            }
+            return esValido;
+        }
+    </script>
 </head>
 
 <body>
@@ -20,7 +41,7 @@
     </header>
     <main>
         <section>
-            <form name="registrarse" method="POST" action="./registrarse.php">
+            <form name="registrarse" method="POST" action="./registrarse.php" onsubmit="return validarRegistro(event)">
                 <label for="nombre">Nombre: </label>
                 <input type="text" name="nombre" maxlength="20" placeholder="Ingrese nombre" autofocus required><br><br>
 

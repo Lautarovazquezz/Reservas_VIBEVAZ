@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title>VBV - Tabla de reservas</title>
     <style>
+        #GenPDF{
+            background-color: white;
+            border: white
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -36,6 +40,8 @@
             transform: scale(1.2);
         }
     </style>
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
     <header>
@@ -61,7 +67,6 @@
                 <?php
                 include("../session/conexion.php");
 
-                
                 $rango_pag = 5;
                 $pagina = isset($_GET['pagina']) && $_GET['pagina'] > 1 ? $_GET['pagina'] : 1;
                 $desde = ($pagina - 1) * $rango_pag;
@@ -99,6 +104,14 @@
                     }
                 }
 
+                // Consulta para el gráfico
+                $sql_chart = "SELECT cancha, COUNT(*) AS cantidad FROM reservas_futbol_nou_camp GROUP BY cancha";
+                $resultado_chart = mysqli_query($conexion, $sql_chart);
+
+                $data_chart = [];
+                while ($fila_chart = mysqli_fetch_assoc($resultado_chart)) {
+                    $data_chart[] = [$fila_chart['cancha'], (int)$fila_chart['cantidad']];
+                }
                 mysqli_close($conexion);
                 ?>
             </table>
@@ -113,9 +126,47 @@
             <br><br>
             <button onclick="location='./menú-reservas.php'">Volver</button>
         </section>
+        <section>
+            <!-- Div para mostrar el gráfico -->
+            <div id="grafico" style="width:100%; height:400px; margin:auto;"></div>
+        </section>
+
+        <!-- Formulario para enviar gráfico como imagen -->
+        <form id="GenPDF" method="post" action="graficoPdf.php">
+            <input type="hidden" name="imagen" id="imagen">
+            <button type="submit">Generar PDF</button>
+        </form>
     </main>
     <footer>
         <p>© 2024 VIBEVAZ. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Script para generar el gráfico -->
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Cancha', 'Cantidad'],
+                <?php
+                foreach ($data_chart as $row) {
+                    echo "['{$row[0]}', {$row[1]}],";
+                }
+                ?>
+            ]);
+
+            var options = {
+                title: 'Cantidad de reservas por tipo de cancha',
+                is3D: true,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('grafico'));
+            chart.draw(data, options);
+
+            // Obtener imagen base64 del gráfico
+            document.getElementById('imagen').value = chart.getImageURI();
+        }
+    </script>
 </body>
 </html>
