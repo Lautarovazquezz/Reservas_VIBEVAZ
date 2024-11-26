@@ -20,66 +20,27 @@
         <h1>Menú de reservas</h1>
     </header>
     <main>
-        
-        <section>                 
-            <input id='boton' type='button' value='Buscar reservas' onClick="location='./buscar-reservas.php'" class="boton" />
-            <input id='boton' type='button' value='Tabla de reservas' onClick='location="./tabla-reservas.php"' class="boton" />
-            <input id="boton" type="button" value="Salir" onClick='location="../session/cerrar-sesion.php"' class="boton" />
+        <section class="image-gallery">
+            <div class="image-container">
+                <a href="./buscar-reservas.php">
+                    <img src="https://cdn.pixabay.com/photo/2024/02/04/20/22/search-8553066_640.png" alt="Buscador">
+                    <p class="image-title">Buscar reservas</p>
+                </a>
+            </div>
+            <div class="image-container">
+                <a href="./tabla-reservas.php">
+                    <img src="https://impulso06.com/wp-content/uploads/2023/10/La-gestion-de-reservas-en-hosteleria.-Herramientas-y-metodos.png" alt="Tabla">
+                    <p class="image-title">Tabla de reservas</p>
+                </a>
+            </div>
+            <div class="image-container">
+                <a href="../session/cerrar-sesion.php">
+                    <img src="https://img.freepik.com/vector-gratis/ilustracion-concepto-escape_114360-5666.jpg" alt="Salir">
+                    <p class="image-title">Salir</p>
+                </a>
+            </div>
         </section>
-    
-    	<!-- Google Charts -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <!-- Script para crear el grafico -->
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Reparaciones', 'Cantidad'],
-          <?php 
-			$sql = "SELECT concat('[\"' , a.tipo, '\",' , cast(count(r.idreparacion) as char), '],' ) as fila
-					FROM reparaciones as r, autos as a
-					WHERE r.idauto = a.idauto 
-					GROUP BY a.tipo
-					ORDER BY count(r.idreparacion) DESC";
-			$resultado = mysqli_query($conexion, $sql);
-			while ($r = mysqli_fetch_assoc($resultado)) echo $r['fila'];
-			/*
-			  ['Comida', 11],
-			  ['Bebida', 2],
-			  ['Limpieza', 2],
-			  ['Panadería', 2],
-			  ['Otros', 7],
-			*/
-		  ?>
-		]);
-
-        var options = {
-          title: 'Cantidad de reparaciones por tipo de vehículo', 
-          is3D: true,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('grafico'));
-        chart.draw(data, options);
-		
-		//genero imagen en formato texto base 64
-        document.getElementById('imagen').value = chart.getImageURI();
-      }
-    </script>
-
-	<section>
-		<form method="post" id="hacer_pdf" action="graficoPdf.php">
-        	<!-- esta variable contendrá la imagen del gráfico -->
-			<input type="hidden" size="100" name="imagen" id="imagen" >
-        	<!-- div donde se mostrará el gráfico -->
-			<div id="grafico" style="width:80%; height: 400px; float:left;"></div>
-			<!-- Boton para enviar la imagen del gráfico al pdf-->
-			<br></br><br></br><br></br>
-			<input type="submit" value="Generar PDF"/>
-		</form>
-	</section>
-</main>
-
+    </main>
     <footer>
         <p>© 2024 VIBEVAZ. Todos los derechos reservados.</p>
     </footer>

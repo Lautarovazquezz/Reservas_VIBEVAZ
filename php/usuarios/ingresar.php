@@ -12,13 +12,7 @@
         function validaIngreso() {
             var usuario = document.login.usuario.value;
             var clave = document.login.clave.value;
-            if (usuario == "") {
-                alert("Complete usuario");
-                return false;
-            } else if (clave == "") {
-                alert("Complete clave");
-                return false;
-            } else if (validaCadena(usuario, 6, 10) && validaCadena(clave, 8, 8)) {
+            if (validaCadena(usuario, 6, 10) && validaCadena(clave, 8, 8)) {
                 return true;
             } else {
                 alert("Largo de usuario y/o Clave incorrectos");
@@ -50,38 +44,38 @@
                 <br><br>
                 <a class="registrarse" href="./registrarse.php">Registrarse</a>
                 <a class="admin" href="../administrador/ingresar-administrador.php">Administrador</a>
+                <?php
+                    if (isset($_POST["enviar"])) {
+                    include("../session/conexion.php");
+                    $usu = mysqli_real_escape_string($conexion, $_POST['correo']);
+                    $cla = mysqli_real_escape_string($conexion, $_POST['contraseña']);
+                    
+                    // Consulta para verificar el usuario
+                    $consulta = "SELECT * FROM usuario WHERE correo='$usu'";
+                    $resultado = mysqli_query($conexion, $consulta);
+                    $cantfilas = mysqli_num_rows($resultado);
+                    
+                    if ($cantfilas == 1) {
+                        $usuario = mysqli_fetch_assoc($resultado);
+                        
+                        // Comparación exacta de la contraseña (respetando mayúsculas y minúsculas)
+                        if ($cla == $usuario['contraseña']) {
+                            session_start();
+                            $_SESSION["logueado"] = $usu;
+                            $_SESSION["usuario_id"] = $usuario['usuario_id'];
+                            header("Location: ../session/menú.php");
+                            exit;
+                        } else {
+                            echo "<br><br><h2 id='errorLoguin'> Contraseña incorrecta </h2>";
+                        }
+                    } else {
+                        echo "<br><br><h2 id='errorLoguin'> Usuario no existe </h2>";
+                    }
+                    mysqli_close($conexion);
+                    }
+                ?>
             </form>
 
-            <?php
-            if (isset($_POST["enviar"])) {
-                include("../session/conexion.php");
-                $usu = mysqli_real_escape_string($conexion, $_POST['correo']);
-                $cla = mysqli_real_escape_string($conexion, $_POST['contraseña']);
-                
-                // Consulta para verificar el usuario
-                $consulta = "SELECT * FROM usuario WHERE correo='$usu'";
-                $resultado = mysqli_query($conexion, $consulta);
-                $cantfilas = mysqli_num_rows($resultado);
-                
-                if ($cantfilas == 1) {
-                    $usuario = mysqli_fetch_assoc($resultado);
-                    
-                    // Comparación exacta de la contraseña (respetando mayúsculas y minúsculas)
-                    if ($cla == $usuario['contraseña']) {
-                        session_start();
-                        $_SESSION["logueado"] = $usu;
-                        $_SESSION["usuario_id"] = $usuario['usuario_id'];
-                        header("Location: ../session/menú.php");
-                        exit;
-                    } else {
-                        echo "<br><br><h2 id='errorLoguin'> Contraseña incorrecta </h2>";
-                    }
-                } else {
-                    echo "<br><br><h2 id='errorLoguin'> Usuario no existe </h2>";
-                }
-                mysqli_close($conexion);
-            }
-            ?>
         </section>
     </main>
 

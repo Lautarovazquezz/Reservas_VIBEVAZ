@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title>VBV - Tabla de reservas</title>
     <style>
-        #GenPDF{
+        #GenPDF {
             background-color: white;
-            border: white
+            border: white;
         }
         table {
             width: 100%;
@@ -40,7 +40,6 @@
             transform: scale(1.2);
         }
     </style>
-    <!-- Google Charts -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
@@ -65,6 +64,8 @@
                     <th>Eliminar</th>
                 </tr>
                 <?php
+                ob_start();
+
                 include("../session/conexion.php");
 
                 $rango_pag = 5;
@@ -87,7 +88,7 @@
                             <td>{$fila['fecha']}</td>
                             <td>{$fila['hora']}</td>
                             <td>
-                                <a href='?eliminar={$fila['nombreR']}' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta reserva?');\">
+                                <a href='?eliminar=" . urlencode($fila['nombreR']) . "' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta reserva?');\">
                                     <img src='../../assets/images/Papelera.png' alt='Eliminar' />
                                 </a>
                             </td>
@@ -95,16 +96,22 @@
                 }
 
                 if (isset($_GET['eliminar'])) {
-                    $nombreR = $_GET['eliminar'];
-                    $sql_delete = "DELETE FROM reservas_futbol_nou_camp WHERE nombreR = '$nombreR'";
-                    if (!mysqli_query($conexion, $sql_delete)) {
-                        echo "<p>Error al eliminar la reserva: " . mysqli_error($conexion) . "</p>";
-                    } else {
+                    $nombreR = mysqli_real_escape_string($conexion, $_GET['eliminar']);
+                    $sql_delete = "DELETE FROM reservas_futbol_nou_camp WHERE nombreR = ?";
+                    
+                    $stmt = $conexion->prepare($sql_delete);
+                    $stmt->bind_param("s", $nombreR);
+
+                    if ($stmt->execute()) {
                         header("Location: ./tabla-reservas.php");
+                        exit();
+                    } else {
+                        echo "<p>Error al eliminar la reserva: " . $stmt->error . "</p>";
                     }
+
+                    $stmt->close();
                 }
 
-                // Consulta para el gráfico
                 $sql_chart = "SELECT cancha, COUNT(*) AS cantidad FROM reservas_futbol_nou_camp GROUP BY cancha";
                 $resultado_chart = mysqli_query($conexion, $sql_chart);
 
@@ -127,11 +134,8 @@
             <button onclick="location='./menú-reservas.php'">Volver</button>
         </section>
         <section>
-            <!-- Div para mostrar el gráfico -->
             <div id="grafico" style="width:100%; height:400px; margin:auto;"></div>
         </section>
-
-        <!-- Formulario para enviar gráfico como imagen -->
         <form id="GenPDF" method="post" action="graficoPdf.php">
             <input type="hidden" name="imagen" id="imagen">
             <button type="submit">Generar PDF</button>
@@ -141,7 +145,6 @@
         <p>© 2024 VIBEVAZ. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Script para generar el gráfico -->
     <script type="text/javascript">
         google.charts.load("current", {packages:["corechart"]});
         google.charts.setOnLoadCallback(drawChart);
@@ -164,9 +167,9 @@
             var chart = new google.visualization.PieChart(document.getElementById('grafico'));
             chart.draw(data, options);
 
-            // Obtener imagen base64 del gráfico
             document.getElementById('imagen').value = chart.getImageURI();
         }
     </script>
 </body>
 </html>
+

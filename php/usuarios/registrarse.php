@@ -13,7 +13,6 @@
             let esValido = true;
 
             do {
-                // Validar que la contraseña tenga exactamente 8 caracteres con al menos una mayúscula, una minúscula y un dígito
                 const contraseñaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{8}$/;
                 if (!contraseñaRegex.test(contraseña)) {
                     alert("La contraseña debe tener exactamente 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un dígito.");

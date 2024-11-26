@@ -72,18 +72,15 @@
                     exit();
                 }
 
-                // Paginación
                 $rango_pag = 5;
                 $pagina = isset($_GET['pagina']) && $_GET['pagina'] > 1 ? $_GET['pagina'] : 1;
                 $desde = ($pagina - 1) * $rango_pag;
 
-                // Contar registros totales
                 $sql_count = "SELECT COUNT(*) AS total FROM reservas_futbol_nou_camp WHERE usuario_id='$usuario_id'";
                 $resultado_count = mysqli_query($conexion, $sql_count);
                 $cant_registros = mysqli_fetch_assoc($resultado_count)['total'];
                 $cant_pag = ceil($cant_registros / $rango_pag);
 
-                // Consulta con paginación
                 $consulta = "SELECT nombreR, cancha, fecha, hora, reserva_id FROM `reservas_futbol_nou_camp` WHERE usuario_id='$usuario_id' ORDER BY fecha ASC, hora ASC LIMIT $desde, $rango_pag";
                 $resultado = mysqli_query($conexion, $consulta);
             ?>
