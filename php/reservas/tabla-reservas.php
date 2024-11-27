@@ -96,20 +96,19 @@
                 }
 
                 if (isset($_GET['eliminar'])) {
-                    $nombreR = mysqli_real_escape_string($conexion, $_GET['eliminar']);
-                    $sql_delete = "DELETE FROM reservas_futbol_nou_camp WHERE nombreR = ?";
-                    
-                    $stmt = $conexion->prepare($sql_delete);
-                    $stmt->bind_param("s", $nombreR);
-
-                    if ($stmt->execute()) {
+                    include("../session/conexion.php");
+             
+                    $nombreR = $_GET['eliminar'];
+                
+                    $sql_delete = "DELETE FROM reservas_futbol_nou_camp WHERE nombreR = '$nombreR'";
+                    if (mysqli_query($conexion, $sql_delete)) {
                         header("Location: ./tabla-reservas.php");
                         exit();
                     } else {
-                        echo "<p>Error al eliminar la reserva: " . $stmt->error . "</p>";
+                        echo "<p>Error al eliminar la reserva: " . mysqli_error($conexion) . "</p>";
                     }
-
-                    $stmt->close();
+                
+                    mysqli_close($conexion);
                 }
 
                 $sql_chart = "SELECT cancha, COUNT(*) AS cantidad FROM reservas_futbol_nou_camp GROUP BY cancha";

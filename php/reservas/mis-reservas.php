@@ -36,20 +36,13 @@
             padding: 10px 20px;
             border: solid 2px;
             border-radius: 5px;
-            transition: 1s;
         }
 
         button:hover {
             cursor: pointer;
             background: #f2f2f2;
             color: black;
-            transition: 1s;
         }
-
-        .form-modificar {
-            display: none;
-        }
-        
     </style>
 </head>
 <body>
@@ -68,6 +61,20 @@
                     $reserva_id = $_GET['reserva_id'];
                     $eliminar_sql = "DELETE FROM `reservas_futbol_nou_camp` WHERE reserva_id='$reserva_id' AND usuario_id='$usuario_id'";
                     mysqli_query($conexion, $eliminar_sql);
+                    header("Location: " . $_SERVER['PHP_SELF']);
+                    exit();
+                }
+
+                if (isset($_POST['modificar'])) {
+                    $reserva_id = $_POST['reserva_id'];
+                    $nueva_fecha = $_POST['nueva_fecha'];
+                    $nueva_hora = $_POST['nueva_hora'];
+                    $nueva_cancha = $_POST['nueva_cancha'];
+
+                    $update_sql = "UPDATE `reservas_futbol_nou_camp` 
+                                   SET fecha = '$nueva_fecha', hora = '$nueva_hora', cancha = '$nueva_cancha'
+                                   WHERE reserva_id = '$reserva_id' AND usuario_id = '$usuario_id'";
+                    mysqli_query($conexion, $update_sql);
                     header("Location: " . $_SERVER['PHP_SELF']);
                     exit();
                 }
@@ -108,39 +115,34 @@
                                 <td><?php echo $fila['fecha']; ?></td>
                                 <td><?php echo $fila['hora']; ?></td>
                                 <td>
-                                    <button onclick="document.getElementById('modificar-<?php echo $fila['reserva_id']; ?>').style.display='table-row';">Modificar</button>
-                                    <div style="display:inline;">
-                                        <button style='color:white;' 
-                                            onmouseover="this.style.color='black';" 
-                                            onmouseout="this.style.color='white';" 
-                                            onclick="if(confirm('¿Estás seguro de que deseas cancelar esta reserva?')) { window.location.href='?cancelar=true&reserva_id=<?php echo $fila['reserva_id']; ?>'; }">
-                                            Cancelar reserva
-                                        </button>
-                                    </div>
+                                    <button onclick="document.getElementById('form-<?php echo $fila['reserva_id']; ?>').style.display='block'">Modificar</button>
+                                    <a href="?cancelar=true&reserva_id=<?php echo $fila['reserva_id']; ?>">
+                                        <button>Cancelar</button>
+                                    </a>
                                 </td>
                             </tr>
-                            <tr id="modificar-<?php echo $fila['reserva_id']; ?>" class="form-modificar">
+                            <tr id="form-<?php echo $fila['reserva_id']; ?>" style="display:none;">
                                 <td colspan="5">
                                     <form method="POST" action="">
                                         <input type="hidden" name="reserva_id" value="<?php echo $fila['reserva_id']; ?>">
                                         <label>Nueva Fecha:</label>
-                                        <input type="date" name="nueva_fecha" min="<?php echo date('Y-m-d'); ?>"><br><br>
+                                        <input type="date" name="nueva_fecha" min="<?php echo date('Y-m-d'); ?>" required><br><br>
                                         <label>Nueva Hora:</label>
-                                        <select class='input' name="nueva_hora">
+                                        <select name="nueva_hora" required>
                                             <option value="">Seleccione una hora</option>
                                             <?php for ($h = 8; $h <= 22; $h++): ?>
                                                 <option value="<?php echo sprintf("%02d:00", $h); ?>"><?php echo sprintf("%02d:00", $h); ?></option>
                                             <?php endfor; ?>
                                         </select><br><br>
                                         <label>Nueva Cancha:</label>
-                                        <select class='input' name="nueva_cancha">
-                                            <option value="">Seleccione cancha</option>
+                                        <select name="nueva_cancha" required>
+                                            <option value="">Seleccione una cancha</option>
                                             <option value="Fútbol 5">Fútbol 5</option>
                                             <option value="Fútbol 7">Fútbol 7</option>
                                             <option value="Fútbol 8">Fútbol 8</option>
                                         </select><br><br>
-                                        <button type="submit" name="modificar">Modificar Reserva</button>
-                                        <button type="button" onclick="document.getElementById('modificar-<?php echo $fila['reserva_id']; ?>').style.display='none';">Cancelar</button>
+                                        <button type="submit" name="modificar">Guardar Cambios</button>
+                                        <button type="button" onclick="document.getElementById('form-<?php echo $fila['reserva_id']; ?>').style.display='none'">Cancelar</button>
                                     </form>
                                 </td>
                             </tr>
@@ -167,4 +169,3 @@
     </footer>
 </body>
 </html>
-

@@ -51,9 +51,9 @@
                 <input type="email" name="correo" maxlength="100" placeholder="Ingrese correo electrónico" required><br><br>
 
                 <label for="contraseña">Contraseña: </label>
-                <input type="password" name="contraseña" maxlength="10" placeholder="Ingrese contraseña" required><br><br>
+                <input type="password" name="contraseña" maxlength="8" placeholder="Ingrese contraseña" required><br><br>
 
-                <button type="button" onClick='location.href="./ingresar.php"'>Ingresar</button>
+                <button type="button" onClick='location.href="./ingresar.php"'>Volver</button>
                 <button type="reset" value="Borrar">Borrar</button>
                 <button type="submit" value="Enviar">Enviar</button>
 
