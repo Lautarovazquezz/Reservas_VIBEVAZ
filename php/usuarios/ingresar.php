@@ -21,7 +21,7 @@
 
     <main>
         <section class="sectionForm">
-            <form name="iniciarSesion" method="POST" action="./ingresar.php" onsubmit="return validaIngreso()">
+            <form name="iniciarSesion" method="POST" action="./ingresar.php">
                 <label for="correo">Email:</label><br><br>
                 <input type="email" name="correo" maxlength="100" placeholder="Ingrese correo electrónico" autofocus required><br><br>
                 <label for="contraseña">Contraseña:</label><br><br>

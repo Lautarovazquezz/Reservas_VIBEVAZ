@@ -8,25 +8,48 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title>VBV - Registrarse</title>
     <script>
-        function validarRegistro(event) {
-            let contraseña = document.forms["registrarse"]["contraseña"].value;
-            let esValido = true;
+    function validarRegistro(event) {
+        const contraseña = document.getElementById("contraseña").value;
 
-            do {
-                const contraseñaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{8}$/;
-                if (!contraseñaRegex.test(contraseña)) {
-                    alert("La contraseña debe tener exactamente 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un dígito.");
-                    esValido = false;
-                    break;
-                }
-            } while (false);
-
-            if (!esValido) {
-                event.preventDefault();
-            }
-            return esValido;
+        if (contraseña.length !== 8) {
+            alert("La contraseña debe tener exactamente 8 caracteres.");
+            event.preventDefault();
+            return false;
         }
-    </script>
+
+        let tieneMayuscula = false;
+        let tieneMinuscula = false;
+        let tieneDigito = false;
+
+        for (let char of contraseña) {
+            if (char >= 'A' && char <= 'Z') tieneMayuscula = true;
+            else if (char >= 'a' && char <= 'z') tieneMinuscula = true;
+            else if (char >= '0' && char <= '9') tieneDigito = true;
+
+            if (tieneMayuscula && tieneMinuscula && tieneDigito) break;
+        }
+
+        if (!tieneMayuscula) {
+            alert("La contraseña debe incluir al menos una letra mayúscula.");
+            event.preventDefault();
+            return false;
+        }
+
+        if (!tieneMinuscula) {
+            alert("La contraseña debe incluir al menos una letra minúscula.");
+            event.preventDefault();
+            return false;
+        }
+
+        if (!tieneDigito) {
+            alert("La contraseña debe incluir al menos un número.");
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+</script>
 </head>
 
 <body>
@@ -51,7 +74,7 @@
                 <input type="email" name="correo" maxlength="100" placeholder="Ingrese correo electrónico" required><br><br>
 
                 <label for="contraseña">Contraseña: </label>
-                <input type="password" name="contraseña" maxlength="8" placeholder="Ingrese contraseña" required><br><br>
+                <input type="password" id="contraseña" name="contraseña" maxlength="8" placeholder="Ingrese contraseña" required><br><br>
 
                 <button type="button" onClick='location.href="./ingresar.php"'>Volver</button>
                 <button type="reset" value="Borrar">Borrar</button>
